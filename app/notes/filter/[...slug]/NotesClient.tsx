@@ -23,8 +23,6 @@ import { fetchNotes } from "@/lib/api";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
-import Modal from "@/components/Modal/Modal";
-import NoteForm from "@/components/NoteForm/NoteForm";
 import Loading from '@/app/notes/filter/[...slug]/loading'
 
 // Types
@@ -65,9 +63,6 @@ const router = useRouter();
     setPage(1);
   };
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
   if (isError || !data) return <p>{isError}</p>;
 
   return (
@@ -92,22 +87,11 @@ const router = useRouter();
   Add note +
 </button>
       </div>
-      
 
       {data.notes.length > 0 ? (
         <NoteList notes={data.notes} />
       ) : (
         <p>No notes found.</p>
-      )}
-      {isModalOpen && (
-        <Modal closeModal={closeModal}>
-          <NoteForm
-            onCancel={closeModal}
-            onCreated={() => {
-              setPage(1);
-            }}
-          />
-        </Modal>
       )}
     </div>
   );

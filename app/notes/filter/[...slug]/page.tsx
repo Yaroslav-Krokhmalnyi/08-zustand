@@ -8,7 +8,7 @@ import TAGS from "@/constants/noteTags";
 import { notFound } from "next/navigation";
 
 // Components
-import NotesPageClient from "./NotesPageClient";
+import NotesPageClient from "./NotesClient";
 
 // Types
 import type { NoteTag } from "@/types/note";
