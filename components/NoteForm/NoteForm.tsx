@@ -11,7 +11,7 @@ import * as Yup from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 // Components
-import { createNote } from "@/lib/api";
+import { addNote } from "@/lib/api";
 
 // Constants
 import TAGS from "@/constants/noteTags";
@@ -38,7 +38,7 @@ export default function NoteForm({ onCancel, onCreated }: NoteFormProps) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (payload: CreateNoteParams) => createNote(payload),
+    mutationFn: (payload: CreateNoteParams) => addNote(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
       onCreated?.();
