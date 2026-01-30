@@ -8,10 +8,7 @@ type ErrorProps = {
 
 const Error = ({ error }: ErrorProps) => {
   return (
-    <div>
-      <h2>Помилка при завантаженні</h2>
-      <p>{error.message}</p>
-    </div>
+   <p>Could not fetch note details. {error.message}</p>
   );
 }
 

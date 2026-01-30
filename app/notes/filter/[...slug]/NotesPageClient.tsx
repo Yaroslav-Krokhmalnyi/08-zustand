@@ -7,6 +7,9 @@ import css from "@/app/notes/filter/[...slug]/NotesPage.module.css";
 // React
 import { useState } from "react";
 
+// Next.js
+import { useRouter } from 'next/navigation';
+
 // Debounce
 import { useDebounce } from "use-debounce";
 
@@ -39,6 +42,8 @@ export default function NotesPageClient({ tag }: NotesPageClientProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [debouncedSearch] = useDebounce(search, 500);
+
+const router = useRouter();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: [
@@ -79,9 +84,13 @@ export default function NotesPageClient({ tag }: NotesPageClientProps) {
         />
       )}
 
-        <button type="button" className={css.button} onClick={openModal}>
-          Add note +
-        </button>
+        <button
+  type="button"
+  className={css.button}
+  onClick={() => router.push('/notes/action/create')}
+>
+  Add note +
+</button>
       </div>
       
 

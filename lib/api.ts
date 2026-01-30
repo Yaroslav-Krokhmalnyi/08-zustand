@@ -80,3 +80,12 @@ export async function fetchNoteById(id: string): Promise<Note> {
 
   return response.data;
 }
+
+// Getcategories
+export async function getCategories(id: string): Promise<Note> {
+  const response = await axiosInstance.get<Note>(`/notes/${id}`, {
+    headers: getAuthHeaders(),
+  });
+
+  return response.data;
+}

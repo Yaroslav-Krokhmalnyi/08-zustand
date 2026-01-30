@@ -1,7 +1,7 @@
 // app/notes/filter/[...slug]/loading.tsx
 
 const Loading = () => {
-  return <p>Завантаження нотатків...</p>;
+  return <p>Loading, please wait...</p>;
 }
 
 export default Loading;

@@ -1,8 +1,6 @@
 // Meta
 import { Metadata } from 'next';
 
-// Liberis
-
 //Styles
 import css from './Home.module.css'
 
