@@ -12,7 +12,7 @@ interface NoteDetailsClientProps {
 
 export default function NoteDetailsClient() {
   const router = useRouter();
-    const handleClose = () => router.back();
+    const handleClose = () => router.push('/notes/filter/all');
 
 const { id } = useParams<{ id: string }>();
   const {
@@ -33,17 +33,23 @@ const { id } = useParams<{ id: string }>();
     return <p>Something went wrong.</p>;
   }
 
+  const formattedDate = note.updatedAt
+    ? `Updated at: ${new Date(note.updatedAt).toLocaleDateString('uk-UA')}`
+    : `Created at: ${new Date(note.createdAt).toLocaleDateString('uk-UA')}}`;
+
   return (
     <div className={css.container}>
       <div className={css.item}>
         <div className={css.header}>
             <h2>{note.title}</h2>
+            <p className={css.tag}>{note.tag}</p>
         </div>
         <p className={css.content}>{note.content}</p>
           <p className={css.date}>
-            Create date: {new Date(note.createdAt).toLocaleDateString()}
+            {formattedDate}
           </p>
       </div>
+      <button type="button" className={css.backBtn} onClick={handleClose}>Back</button>
     </div>
   );
 }

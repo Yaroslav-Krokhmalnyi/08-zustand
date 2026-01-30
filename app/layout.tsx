@@ -1,13 +1,25 @@
 // Meta
 import { Metadata } from 'next';
 
-//Styles
-import "./globals.css";
+// Liberis
+import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 
 // Components
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
-import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
+
+//Styles
+import "./globals.css";
+
+// Fonts
+import { Roboto } from 'next/font/google';
+
+const roboto = Roboto({
+  subsets: ['latin'], 
+  weight: ['400', '700'],
+  variable: '--font-roboto', 
+  display: 'swap', 
+});
 
 export const metadata: Metadata = {
   title: "NoteHub",
@@ -15,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
       title: "NoteHub",
       description: "A simple notes application built with Next.js",
-      url: 'https://yaroslav-krokhmalnyi.github.io/08-zustand/',
+      url: 'https://08-zustand-drab-kappa.vercel.app',
       images: [
         {
           url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
@@ -37,7 +49,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className={roboto.variable}>
         <TanStackProvider>
           <Header />
           {children}

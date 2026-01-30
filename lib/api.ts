@@ -55,7 +55,7 @@ export async function fetchNotes({
 }
 
 // Create note — CSR mutation
-export async function createNote(payload: CreateNoteParams): Promise<Note> {
+export async function addNote(payload: CreateNoteParams): Promise<Note> {
   const response = await axiosInstance.post<Note>("/notes", payload, {
     headers: getAuthHeaders(),
   });
@@ -80,4 +80,3 @@ export async function fetchNoteById(id: string): Promise<Note> {
 
   return response.data;
 }
-
