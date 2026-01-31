@@ -38,7 +38,8 @@ const { id } = useParams<{ id: string }>();
     : `Created at: ${new Date(note.createdAt).toLocaleDateString('uk-UA')}}`;
 
   return (
-    <div className={css.container}>
+    <main className={css.main}>
+      <div className={css.container}>
       <div className={css.item}>
         <div className={css.header}>
             <h2>{note.title}</h2>
@@ -51,5 +52,7 @@ const { id } = useParams<{ id: string }>();
       </div>
       <button type="button" className={css.backBtn} onClick={handleClose}>Back</button>
     </div>
+    </main>
+    
   );
 }
