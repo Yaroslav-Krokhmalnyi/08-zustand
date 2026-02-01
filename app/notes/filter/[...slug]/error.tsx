@@ -1,5 +1,3 @@
-// app/notes/filter/[...slug]/error.tsx
-
 'use client';
 
 type ErrorProps = {
@@ -8,7 +6,7 @@ type ErrorProps = {
 
 const Error = ({ error }: ErrorProps) => {
   return (
-   <p>Could not fetch note details. {error.message}</p>
+   <p>Could not fetch notes. {error.message}</p>
   );
 }
 

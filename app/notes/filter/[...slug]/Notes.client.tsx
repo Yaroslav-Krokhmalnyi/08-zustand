@@ -37,7 +37,6 @@ const PER_PAGE = 12;
 export default function NotesPageClient({ tag }: NotesPageClientProps) {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [debouncedSearch] = useDebounce(search, 500);
 
@@ -63,11 +62,16 @@ const router = useRouter();
     setPage(1);
   };
 
-  if (isError || !data) return <p>{isError}</p>;
+  if (isLoading) {
+    return <p>Loading, please wait...</p>;
+  }
+
+  if (isError || !data) {
+    return <p>Something went wrong.</p>;
+  }
 
   return (
     <div className={css.app}>
-      {isLoading && <Loading />}
       <div className={css.toolbar}>
         <SearchBox value={search} onChange={handleSearchChange} />
 
