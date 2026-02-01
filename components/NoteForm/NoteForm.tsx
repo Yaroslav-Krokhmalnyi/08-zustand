@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Yup from "yup";
 
 // API
@@ -24,6 +24,25 @@ interface NoteFormProps {
 export default function NoteForm({ categories }: NoteFormProps) {
   const router = useRouter();
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const queryClient = useQueryClient();
+
+  // Yup schema
+  const NoteFormSchema = Yup.object({
+    title: Yup.string()
+      .trim()
+      .min(3, "Title must be at least 3 characters")
+      .max(50, "Title must be at most 50 characters")
+      .required("Title is required"),
+
+    content: Yup.string()
+      .trim()
+      .max(500, "Content must be at most 500 characters")
+      .required("Content is required"),
+
+    tag: Yup.mixed<NoteTag>()
+      .oneOf(categories, "Invalid category")
+      .required("Category is required"),
+  });
 
   // Zustand store
   const {
@@ -37,7 +56,7 @@ export default function NoteForm({ categories }: NoteFormProps) {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
   ) => {
-    // 4. Коли користувач змінює будь-яке поле форми — оновлюємо стан
+
     setDraft({
       ...{ title, content, tag },
       [event.target.name]: event.target.value,
@@ -47,9 +66,12 @@ export default function NoteForm({ categories }: NoteFormProps) {
   const { mutate, isPending } = useMutation({
     mutationFn: addNote,
     onSuccess: () => {
-      clearDraft();
-      router.push("/notes/filter/all");
-    },
+    queryClient.invalidateQueries({
+      queryKey: ["notes"],
+    });
+    clearDraft();
+    router.push("/notes/filter/all");
+  },
   });
 
   const handleSubmit = async (formData: FormData) => {
@@ -80,24 +102,6 @@ export default function NoteForm({ categories }: NoteFormProps) {
       }
     }
   };
-
-  // Yup schema
-  const NoteFormSchema = Yup.object({
-    title: Yup.string()
-      .trim()
-      .min(3, "Title must be at least 3 characters")
-      .max(50, "Title must be at most 50 characters")
-      .required("Title is required"),
-
-    content: Yup.string()
-      .trim()
-      .max(500, "Content must be at most 500 characters")
-      .required("Content is required"),
-
-    tag: Yup.mixed<NoteTag>()
-      .oneOf(categories, "Invalid category")
-      .required("Category is required"),
-  });
 
   return (
     <form className={css.form} action={handleSubmit}>
@@ -133,7 +137,7 @@ export default function NoteForm({ categories }: NoteFormProps) {
           id="tag"
           name="tag"
           className={css.select}
-          defaultValue={content}
+          defaultValue={tag}
           onChange={handleChange}
         >
           {categories.map((category) => (
